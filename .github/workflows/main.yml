@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: windows-lattest
+    runs-on: windows-latest
 
     steps:
       - name: Checkout repository
