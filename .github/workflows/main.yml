@@ -1,0 +1,20 @@
+name: Deploy to IIS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Copy Files to IIS Server
+        run: |
+          $source = "${{ github.workspace }}"
+          $destination = "D:\IIS Sites\simple-site"
+          Copy-Item -Path "$source\*" -Destination $destination -Recurse -Force
