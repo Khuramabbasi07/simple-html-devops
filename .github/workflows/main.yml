@@ -16,7 +16,7 @@ jobs:
         shell: pwsh
         run: |
           $source = "${{ github.workspace }}"
-          $destination = "D:\IIS Sites\Mysite"
+          $destination = D:\IIS Sites\MySite
 
           Write-Host "Deploying files to IIS: $destination"
 
