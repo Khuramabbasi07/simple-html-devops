@@ -16,7 +16,7 @@ jobs:
         shell: pwsh
         run: |
           $source = "${{ github.workspace }}"
-          $destination = "D:\IIS Sites\MySite"
+          $destination = "D:\IIS Sites\Mysite"
 
           Write-Host "Deploying files to IIS: $destination"
 
@@ -31,5 +31,5 @@ jobs:
         shell: pwsh
         run: |
           Import-Module WebAdministration
-          Stop-Website -Name "MySite" -ErrorAction SilentlyContinue
-          Start-Website -Name "MySite"
+          Stop-Website -Name "Mysite" -ErrorAction SilentlyContinue
+          Start-Website -Name "Mysite"
