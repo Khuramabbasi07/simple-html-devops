@@ -1,35 +1,41 @@
-name: Deploy Static HTML Site to IIS (MySite)
+name: 🚀 Deploy Simple HTML Website to IIS
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main   
 
 jobs:
   deploy:
-    runs-on: windows-latest
+    runs-on: windows-latest 
 
     steps:
-      - name: Checkout repository
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Deploy HTML files to IIS
+      - name: Verify Files
+        run: |
+          Write-Host "Listing repository files..."
+          Get-ChildItem -Recurse
+      - name: Deploy to IIS (MySite)
         shell: pwsh
         run: |
-          $source = "${{ github.workspace }}"
-          $destination = D:\IIS Sites\MySite
-
-          Write-Host "Deploying files to IIS: $destination"
-
+          $source = "D:\a\simple-html-devops\simple-html-devops"
+          $destination = "D:\IIS Sites\MySite"
+          Write-Host "Starting deployment to IIS MySite folder..."
+          
+          # Agar destination folder exist karta hai, delete kar do
           if (Test-Path $destination) {
-            Remove-Item $destination -Recurse -Force
+              Remove-Item $destination -Recurse -Force
+              Write-Host "Old site deleted."
           }
-
-          New-Item -ItemType Directory -Path $destination | Out-Null
+          # Naya destination folder banao
+          New-Item -ItemType Directory -Force -Path $destination | Out-Null
+          Write-Host "New site folder created."
+          # Files copy karo
           Copy-Item -Path "$source\*" -Destination $destination -Recurse -Force
-
-      - name: Restart IIS Website
-        shell: pwsh
+          Write-Host "Files successfully copied to IIS site."
+      - name: Confirm Deployment
         run: |
-          Import-Module WebAdministration
-          Stop-Website -Name "Mysite" -ErrorAction SilentlyContinue
-          Start-Website -Name "Mysite"
+          Write-Host "✅ Deployment completed successfully to IIS!"
+          Write-Host "Visit your site at: http://localhost or your server IP"
