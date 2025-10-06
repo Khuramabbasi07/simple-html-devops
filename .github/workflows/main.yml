@@ -42,4 +42,3 @@ jobs:
           Import-Module WebAdministration
           Stop-Website -Name "MySite" -ErrorAction SilentlyContinue
           Start-Website -Name "MySite"
-
