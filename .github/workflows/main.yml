@@ -1,42 +1,33 @@
-name: Build & Deploy to IIS (MySite)
+name: Deploy Static HTML Site to IIS (MySite)
 
 on:
   push:
     branches: [ main ]
 
 jobs:
-  build-and-deploy:
-    runs-on:  windows-latest
+  deploy:
+    runs-on: windows-lattest
+
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run build (minify + prepare build folder)
-        run: npm run build
-
-      - name: Deploy to IIS (MySite)
+      - name: Deploy HTML files to IIS
         shell: pwsh
         run: |
-          $source = "${{ github.workspace }}\build"
+          $source = "${{ github.workspace }}"
           $destination = "D:\IIS Sites\MySite"
 
-          Write-Host "Deploying build -> $destination"
+          Write-Host "Deploying files to IIS: $destination"
 
           if (Test-Path $destination) {
             Remove-Item $destination -Recurse -Force
           }
+
           New-Item -ItemType Directory -Path $destination | Out-Null
           Copy-Item -Path "$source\*" -Destination $destination -Recurse -Force
 
-      - name: Restart website
+      - name: Restart IIS Website
         shell: pwsh
         run: |
           Import-Module WebAdministration
