@@ -3,11 +3,11 @@ name: 🚀 Deploy Simple HTML Website to IIS
 on:
   push:
     branches:
-      - main   # jab main branch par push hoga, deployment chalega
+      - main   
 
 jobs:
   deploy:
-    runs-on: self-hosted  # aapka IIS server jahan GitHub runner install hai
+    runs-on: windows-latest 
 
     steps:
       - name: Checkout Code
