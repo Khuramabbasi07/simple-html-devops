@@ -23,16 +23,13 @@ jobs:
           $source = "D:\a\simple-html-devops\simple-html-devops"
           $destination = "D:\IIS Sites\MySite"
           Write-Host "Starting deployment to IIS MySite folder..."
-          
-          # Agar destination folder exist karta hai, delete kar do
+
           if (Test-Path $destination) {
               Remove-Item $destination -Recurse -Force
               Write-Host "Old site deleted."
           }
-          # Naya destination folder banao
           New-Item -ItemType Directory -Force -Path $destination | Out-Null
           Write-Host "New site folder created."
-          # Files copy karo
           Copy-Item -Path "$source\*" -Destination $destination -Recurse -Force
           Write-Host "Files successfully copied to IIS site."
       - name: Confirm Deployment
